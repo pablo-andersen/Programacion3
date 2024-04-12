@@ -107,13 +107,12 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T>{
             if (anterior == null){
                 nuevo.setNext(this.first);
                 this.first = nuevo;
-                this.size++;
             }
             else {
                 nuevo.setNext(actual);
                 anterior.setNext(nuevo);
-                this.size++;
             }
+            this.size++;
         }
     }	
 }
