@@ -18,8 +18,9 @@ public class Fibonacci {
     }
 
     public static void main(String[] args) {
-        System.out.println("Secuencia de Fibonacci con 18 elementos");
-        System.out.println(getFibonacci(18));
+        Integer elementos = 25;
+        System.out.println("Secuencia de Fibonacci con "+ elementos+" elementos");
+        System.out.println(getFibonacci(elementos));
     }
 
 }

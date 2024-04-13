@@ -26,7 +26,6 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T>{
             this.first = this.first.getNext();	
             this.size--;
         }
-
         return output;
 	}
 
@@ -92,27 +91,20 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T>{
     
     public void insertarOrdenado (T info){
         Node<T> nuevo = new Node<T>(info, null);
-        if (this.first == null || (this.first.getInfo()).compareTo(info) > 0){
+        Node<T> actual = this.first;
+        Node<T> anterior = null;
+        while (actual != null && (actual.getInfo()).compareTo(info) < 0){
+            anterior = actual;
+            actual = actual.getNext();
+        }
+        if (anterior == null){
             nuevo.setNext(this.first);
             this.first = nuevo;
-            this.size++;
         }
         else {
-            Node<T> actual = this.first;
-            Node<T> anterior = null;
-            while (actual != null && (actual.getInfo()).compareTo(info) < 0){
-                anterior = actual;
-                actual = actual.getNext();
-            }
-            if (anterior == null){
-                nuevo.setNext(this.first);
-                this.first = nuevo;
-            }
-            else {
-                nuevo.setNext(actual);
-                anterior.setNext(nuevo);
-            }
-            this.size++;
-        }
+            nuevo.setNext(actual);
+            anterior.setNext(nuevo);
+        }        
+        this.size++;
     }	
 }
