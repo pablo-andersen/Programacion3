@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "TP2.Main",
+            "projectName": "Practicos_77c2ddc1"
+        },
+        {
+            "type": "java",
             "name": "Fibonacci",
             "request": "launch",
             "mainClass": "TP2.Fibonacci",
