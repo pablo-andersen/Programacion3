@@ -1,7 +1,5 @@
 package TP2;
 
-import java.util.Arrays;
-
 public class Main {
 
         public static boolean arrOrdenadoAsc(int[] arr, int n) {            
@@ -82,6 +80,4 @@ public class Main {
             System.out.println("Secuencia de Fibonacci con "+ elementos+" elementos");
             System.out.println(getFibonacci(elementos));
         }
-        }
-        
-    }
+}
