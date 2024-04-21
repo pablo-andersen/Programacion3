@@ -136,7 +136,7 @@ public class MiDoubleLinkedList<T extends Comparable<T>> implements Iterable<T> 
 
     @Override
     public Iterator<T> iterator() {
-        return new MyDoubleIterator<>(this.first);
+        return new Iterator(this.first);
     }
     
 }

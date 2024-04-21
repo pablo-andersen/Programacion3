@@ -32,7 +32,7 @@ public class TreeNode {
 		return value;
 	}
 
-    public Integer setValue(int value){
+    public void setValue(int value){
         this.value = value;
     }
 

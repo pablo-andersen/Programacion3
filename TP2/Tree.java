@@ -284,7 +284,7 @@ public class Tree {
         } 
         else if(node.getValue() < value){                             //El valor del nodo actual es menor que el valor a borrar
             if(node.getRight()!= null){                                 //Si tengo hijo derecho, invoco a delete con el hijo derecho
-                return delete(node.getRight()), node, value);
+                return delete(node.getRight(), node, value);
             }
             return false;
         }
