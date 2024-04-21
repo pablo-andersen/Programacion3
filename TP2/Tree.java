@@ -318,4 +318,58 @@ public class Tree {
         }
         return resultadoParcial;
     }
+
+    public ArrayList<Integer> hojasMayoresQue(int valor) throws Exception{
+        if (this.root != null){
+            return hojasMayoresQue(this.root, valor);
+        }
+        else {
+            throw new Exception("El arbol esta vacio");
+        }
+    }
+
+    private ArrayList<Integer> hojasMayoresQue(TreeNode node, int value){
+        ArrayList<Integer> resultado = new ArrayList<Integer>();
+        if(node.getLeft() == null && node.getRight() == null){
+            if(node.getValue() > value){
+                resultado.add(node.getValue());
+            }
+        }
+        else if(node.getValue() > value && node.getLeft() != null){
+            resultado.addAll(hojasMayoresQue(node.getLeft(), value));
+        }
+        if(node.getRight() != null){
+            resultado.addAll(hojasMayoresQue(node.getRight(), value));
+        }
+        return resultado;
+    }
+
+    public void completarValores() throws Exception{
+        if (this.root != null){
+            if(this.root.getRight() != null || this.root.getLeft() != null){
+                this.root.setValue(completarValores(this.root,null));
+            }
+        }   
+        else throw new Exception("El árbol está vacío.");
+    }
+
+    private int completarValores(TreeNode node, TreeNode previous){
+        if(node.getRight() == null && node.getLeft() == null){
+            return node.getValue();
+        }
+        int resultadoDerecho = 0;
+        int resultadoIzquierdo = 0;
+        if(node.getRight() != null){
+            resultadoDerecho = completarValores(node.getRight(), node);
+        }
+        if(node.getLeft() != null){
+            resultadoIzquierdo = completarValores(node.getLeft(), node);
+        }   
+        int resultado = resultadoDerecho - resultadoIzquierdo;
+        if(previous != null){                   //Si no soy la raiz, tomo el valor de resultado
+            node.setValue(resultado);           //Si soy la raíz, el valor lo escribo en el método público;
+        }
+        return resultado;
+    }
+
 }
