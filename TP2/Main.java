@@ -1,7 +1,11 @@
 package TP2;
+/*******************************************************/
+/***************** Ejercicios del TP1.2*****************/
+/*******************************************************/
+
 
 public class Main {
-
+        
         public static boolean arrOrdenadoAsc(int[] arr, int n) {            
             if (n == 0 || n == 1) {
                 return true;
