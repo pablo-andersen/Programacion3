@@ -6,11 +6,18 @@ import java.util.Iterator;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	
-	
+	NodoGrafo primerNodo;
+
+	public GrafoDirigido() {
+		primerNodo = null;
+	}
 
 	@Override
 	public void agregarVertice(int verticeId) {
 		// TODO Auto-generated method stub
+		//existe el vertice en el grafo? 
+		//si no existe, lo agrego
+		//si existe, no hago nada
 	}
 
 	@Override
@@ -41,7 +48,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
+	public Arco<T> obtenerArco(int unVertice, int otroVertice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,5 +88,4 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
