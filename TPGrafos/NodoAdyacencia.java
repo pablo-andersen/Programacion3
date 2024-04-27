@@ -1,6 +1,6 @@
 package TPGrafos;
 
-public class NodoAdyacencia<T> extends Nodo {
+public class NodoAdyacencia<T> extends Nodo{
 
     private Arco<T> arco;
 

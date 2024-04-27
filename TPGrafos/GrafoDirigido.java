@@ -7,32 +7,44 @@ import java.util.Iterator;
 public class GrafoDirigido<T> implements Grafo<T> {
 	
 	NodoGrafo primerNodo;
+	int cantidadVertices;
+	int cantidadArcos;
 
 	public GrafoDirigido() {
 		primerNodo = null;
+		this.cantidadVertices = 0;
+		this.cantidadArcos = 0;
 	}
 
 	@Override
 	public void agregarVertice(int verticeId) {
-		// TODO Auto-generated method stub
-		//existe el vertice en el grafo? 
-		//si no existe, lo agrego
-		//si existe, no hago nada
+		if(this.primerNodo == null){
+			this.primerNodo = new NodoGrafo(verticeId);
+			this.cantidadVertices++;
+		}
+		else{
+			if(agregarVertice(verticeId, this.primerNodo)){
+				this.cantidadVertices++;
+			}
+		}		
 	}
 
 	@Override
 	public void borrarVertice(int verticeId) {
 		// TODO Auto-generated method stub
+		this.cantidadVertices--;
 	}
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		// TODO Auto-generated method stub
+		this.cantidadArcos++;
 	}
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
 		// TODO Auto-generated method stub
+		this.cantidadArcos--;
 	}
 
 	@Override
@@ -55,14 +67,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public int cantidadVertices() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.cantidadVertices;				//complejidad O(1)
 	}
 
 	@Override
 	public int cantidadArcos() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.cantidadArcos;					//complejidad O(1)
 	}
 
 	@Override
@@ -87,5 +97,18 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private boolean agregarVertice(int verticeId, Nodo nodo){
+		if(nodo.getVertice() != verticeId){
+			if(nodo.getNext() != null){
+				agregarVertice(verticeId, nodo.getNext());
+			}
+			else{
+				nodo.setNext(new NodoGrafo(verticeId));
+				return true;
+			}
+		}
+		return false;
 	}
 }
