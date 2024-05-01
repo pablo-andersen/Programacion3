@@ -1,78 +1,96 @@
 package TPGrafos;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	
-	NodoGrafo primerNodo;
+	// Vertice<T> primerNodo;  Esto no va!!!
+	HashMap<Integer, Vertice<T>> vertices = new HashMap<Integer, Vertice<T>>();
+
 	int cantidadVertices;
 	int cantidadArcos;
 
-	public GrafoDirigido() {
-		primerNodo = null;
+	public GrafoDirigido() {		
+		this.vertices = new HashMap<Integer, Vertice<T>>();
 		this.cantidadVertices = 0;
 		this.cantidadArcos = 0;
 	}
 
 	@Override
-	public void agregarVertice(int verticeId) {
-		if(this.primerNodo == null){
-			this.primerNodo = new NodoGrafo(verticeId);
-			this.cantidadVertices++;
+	public void agregarVertice(int unVertice) {
+		if(!contieneVertice(unVertice)){												//Verifico que el vertice no exista
+			Vertice<T> nuevoVertice = new Vertice<T>(unVertice);						//Instancio un nuevo vertice
+			this.vertices.put(unVertice, nuevoVertice);									//Agrego el vertice al hashMap
+			this.cantidadVertices++;													//Incremento en uno la cantidad de vertices
 		}
-		else{
-			if(agregarVertice(verticeId, this.primerNodo)){
-				this.cantidadVertices++;
+	}
+
+	@Override
+	public void borrarVertice(int unVertice) {
+		if(contieneVertice(unVertice)){													//Verifico que el vertice exista
+			this.cantidadArcos -= vertices.get(unVertice).getArcos().size();			//Decremento cantidadArcos en la cantidad de arcos que tiene el vertice
+			this.vertices.remove(unVertice);											//Elimino el vertice del hashMap (junto con sus arcos asociados)
+			this.cantidadVertices--;													//Decremento en uno la cantidad de vertices
+			for (Vertice<T> vertice : vertices.values()) {								//Recorro todos los vertices del hashMap
+				if(existeArco(vertice.getVerticeId(), unVertice)){						//Si existe un arco que tenga como vertice destino al vertice que quiero borrar
+					borrarArco(vertice.getVerticeId(), unVertice);						//Lo borro
+					this.cantidadArcos--;												//Decremento en uno la cantidad de arcos
+				}
 			}
-		}		
+		}																				//Si el vertice no existe no hago nada
 	}
 
 	@Override
-	public void borrarVertice(int verticeId) {
-		// TODO Auto-generated method stub
-		this.cantidadVertices--;
+	public void agregarArco(int unVertice, int otroVertice, T etiqueta) {
+		if(contieneVertice(unVertice) && contieneVertice(otroVertice)){					//Vertifico que ambos vertices existan
+			if (!existeArco(unVertice, otroVertice)) {									//Vertifico que no exista el arco que quiero agregar
+				Arco<T> arco = new Arco<T>(unVertice, otroVertice, etiqueta);			//Creo el arco que voy a insertar
+				vertices.get(unVertice).addArco(arco);									//Agrego el arco a la lista de arcos del vertice origen
+				this.cantidadArcos++;													//Incremento en uno la cantidad de arcos
+			}			
+		}
 	}
 
 	@Override
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		// TODO Auto-generated method stub
-		this.cantidadArcos++;
-	}
-
-	@Override
-	public void borrarArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
+	public void borrarArco(int unVertice, int otroVertice) {							//Asumo que para borrar un arco primero se realza la verificación de que exista
+		vertices.get(unVertice).removeArco(obtenerArco(unVertice, otroVertice));		//Elimino el arco de la lista de arcos del vertice origen
 		this.cantidadArcos--;
 	}
 
 	@Override
-	public boolean contieneVertice(int verticeId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean contieneVertice(int unVertice) {
+		return vertices.containsKey(unVertice);											// Verifico si el verticeId pasado por parametro esta en el hashMap de vertices
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean existeArco(int unVertice, int otroVertice) {
+		return obtenerArco(unVertice, otroVertice) != null;								//si el arco que obtengo no es null, entonces existe
 	}
 
 	@Override
 	public Arco<T> obtenerArco(int unVertice, int otroVertice) {
-		// TODO Auto-generated method stub
-		return null;
+		if(contieneVertice(unVertice)){													//verifico que el vertice origen exista			
+			ListIterator<Integer> itVertices = vertices.Iterator();			//obtengo un iterador de los arcos del vertice origen
+			while(arcos.hasNext()){														//mientras haya arcos para recorrer
+				Arco<T> arco = arcos.next();											//obtengo el arco
+				if(arco.getVerticeDestino() == otroVertice){							//si el vertice destino del arco es igual al vertice destino pasado por parametro
+					return arco;														//devuelvo el arco
+				}
+			}
+		}		
+		return null;																	//si no se cumple la condicion anterior devuelvo null
 	}
 
 	@Override
 	public int cantidadVertices() {
-		return this.cantidadVertices;				//complejidad O(1)
+		return this.cantidadVertices;													//complejidad O(1)
 	}
 
 	@Override
 	public int cantidadArcos() {
-		return this.cantidadArcos;					//complejidad O(1)
+	return this.cantidadArcos;															//complejidad O(1)
 	}
 
 	@Override
@@ -82,7 +100,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+	public Iterator<Integer> obtenerAdyacentes(int unVertice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,21 +112,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
+	public Iterator<Arco<T>> obtenerArcos(int unVertice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private boolean agregarVertice(int verticeId, Nodo nodo){
-		if(nodo.getVertice() != verticeId){
-			if(nodo.getNext() != null){
-				agregarVertice(verticeId, nodo.getNext());
-			}
-			else{
-				nodo.setNext(new NodoGrafo(verticeId));
-				return true;
-			}
-		}
-		return false;
-	}
 }
