@@ -1,6 +1,5 @@
 package TPGrafos;
 
-import java.util.Iterator;
 
 /*
  * La clase arco representa un arco del grafo. Contiene un vertice origen, un vertice destino y una etiqueta.

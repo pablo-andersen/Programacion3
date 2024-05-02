@@ -35,8 +35,7 @@ public class Vertice<T> {
     }
 
     public boolean existeArco(int verticeId){
-        
-        return null;
+        return false;
     }
     
     

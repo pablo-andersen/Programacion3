@@ -2,14 +2,13 @@ package TPGrafos;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ListIterator;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	
 	// Vertice<T> primerNodo;  Esto no va!!!
 	HashMap<Integer, Vertice<T>> vertices = new HashMap<Integer, Vertice<T>>();
 
-	int cantidadVertices;
+	int cantidadVertices;																// Se justifica tener este atributo? No se puede obtener la cantidad de vertices con método size() sin empeorar la complejidad??	
 	int cantidadArcos;
 
 	public GrafoDirigido() {		
@@ -33,9 +32,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 			this.cantidadArcos -= vertices.get(unVertice).getArcos().size();			//Decremento cantidadArcos en la cantidad de arcos que tiene el vertice
 			this.vertices.remove(unVertice);											//Elimino el vertice del hashMap (junto con sus arcos asociados)
 			this.cantidadVertices--;													//Decremento en uno la cantidad de vertices
-			for (Vertice<T> vertice : vertices.values()) {								//Recorro todos los vertices del hashMap
-				if(existeArco(vertice.getVerticeId(), unVertice)){						//Si existe un arco que tenga como vertice destino al vertice que quiero borrar
-					borrarArco(vertice.getVerticeId(), unVertice);						//Lo borro
+			for (Integer verticeId : vertices.keySet()) {								//Recorro todos los vertices del hashMap
+				if(existeArco(verticeId, unVertice)){									//Si existe un arco que tenga como vertice destino al vertice que quiero borrar
+					borrarArco(verticeId, unVertice);									//Lo borro
 					this.cantidadArcos--;												//Decremento en uno la cantidad de arcos
 				}
 			}
@@ -54,7 +53,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void borrarArco(int unVertice, int otroVertice) {							//Asumo que para borrar un arco primero se realza la verificación de que exista
+	public void borrarArco(int unVertice, int otroVertice) {							//Asumo que para borrar un arco primero se realiza la verificación de que exista
 		vertices.get(unVertice).removeArco(obtenerArco(unVertice, otroVertice));		//Elimino el arco de la lista de arcos del vertice origen
 		this.cantidadArcos--;
 	}
@@ -72,9 +71,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public Arco<T> obtenerArco(int unVertice, int otroVertice) {
 		if(contieneVertice(unVertice)){													//verifico que el vertice origen exista			
-			ListIterator<Integer> itVertices = vertices.Iterator();			//obtengo un iterador de los arcos del vertice origen
-			while(arcos.hasNext()){														//mientras haya arcos para recorrer
-				Arco<T> arco = arcos.next();											//obtengo el arco
+			Iterator<Arco<T>> itArcos = vertices.get(unVertice).getArcos().iterator();	//obtengo un iterador de los arcos del vertice origen
+			while(itArcos.hasNext()){													//mientras haya arcos para recorrer
+				Arco<T> arco = itArcos.next();											//obtengo el arco
 				if(arco.getVerticeDestino() == otroVertice){							//si el vertice destino del arco es igual al vertice destino pasado por parametro
 					return arco;														//devuelvo el arco
 				}
