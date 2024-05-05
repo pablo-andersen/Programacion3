@@ -3,12 +3,15 @@ package TPGrafos;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	
 	HashMap<Integer, Vertice<T>> vertices;
+	Queue<Vertice<T>> fila;		
 	int cantidadVertices;																
 	int cantidadArcos;
+	int tiempo;
 
 	public GrafoDirigido() {		
 		this.vertices = new HashMap<Integer, Vertice<T>>();
@@ -102,7 +105,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	//   LinkedList<Integer> listaAdyacentes =  v.obtenerAdyacentes() ;
 	//   return listaAdyacentes.iterator();
 	// ****** SE REEMPLAZA EL CODIGO ANTERIOR POR LA FORMA CORTA DE ABAJO ******
-	  return vertices.get(unVertice).obtenerAdyacentes().iterator();					
+		return vertices.get(unVertice).obtenerAdyacentes().iterator();					
 	}
 
 	@Override
@@ -121,4 +124,84 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return vertices.get(unVertice).getArcos().iterator();			
 	}
 
+	public LinkedList<Integer> visitarVertice(Vertice<T> unVertice){
+		LinkedList<Integer> resultado = new LinkedList<Integer>();
+		unVertice.setColor("amarillo");
+		resultado.add(unVertice.getVerticeId());
+		this.tiempo++;
+		unVertice.setTiempoDescubrimiento(this.tiempo);
+		Iterator<Integer> itAdyacentes = obtenerAdyacentes(unVertice.getVerticeId());
+		while (itAdyacentes.hasNext()){
+			int verticeId = itAdyacentes.next();
+			Vertice<T> v = vertices.get(verticeId);
+			if(v.getColor().equals("blanco")){
+				resultado.addAll(visitarVertice(v));			
+			}
+		}
+		unVertice.setColor("negro");
+		this.tiempo++;
+		unVertice.setTiempoFinalizacion(tiempo);
+		return resultado;
+	}
+
+	public LinkedList<Integer> recorridoEnProfundidad() {							//Recorrido en profundidad del grafo a partir del primer vertice devuelto por el metodo que devuelve los vertices del grafo
+		LinkedList<Integer> resultado = new LinkedList<Integer>();					// este método devuelve una lista de Ids con el orden de los vértices visitados.
+		Iterator<Integer> itVertices = obtenerVertices();
+		while(itVertices.hasNext()){
+			int verticeId = itVertices.next();		
+			vertices.get(verticeId).setColor("blanco");
+		}	
+
+		this.tiempo = 0;
+		
+		itVertices = obtenerVertices();
+		while(itVertices.hasNext()){	 
+			int verticeId = itVertices.next();
+			Vertice<T> v = vertices.get(verticeId);
+			if(v.getColor().equals("blanco")){
+				resultado.addAll(visitarVertice(v));
+			}
+		}
+		return resultado;
+	}
+
+	public LinkedList<Integer> recorridoEnAmplitud(Vertice<T> vertice){
+		LinkedList<Integer> resultado = new LinkedList<Integer>();
+		resultado.add(vertice.getVerticeId());
+		vertice.setColor("amarillo");
+		fila.add(vertice);
+		while(!fila.isEmpty()){
+			Vertice<T> verticeFila = fila.remove();
+			Iterator<Integer> itAdyacentes = obtenerAdyacentes(verticeFila.getVerticeId());
+			while(itAdyacentes.hasNext()){
+				Vertice<T> vAdyacente = vertices.get(itAdyacentes.next());
+				if(vAdyacente.getColor().equals("blanco")){
+					vAdyacente.setColor("amarillo");
+					fila.add(vAdyacente);
+					resultado.add(vAdyacente.getVerticeId());
+				}
+			}
+		}
+		return resultado;
+	}
+	
+	public LinkedList<Integer> recorridoEnAmplitud(){
+		LinkedList<Integer> resultado = new LinkedList<Integer>();
+		this.fila = new LinkedList<Vertice<T>>();
+
+		Iterator<Integer> itVertices = obtenerVertices();		
+		while(itVertices.hasNext()){							
+			int verticeId = itVertices.next();				
+			vertices.get(verticeId).setColor("blanco");		
+		}
+		itVertices = obtenerVertices();
+		while(itVertices.hasNext()){
+			Integer verticeId = itVertices.next();
+			Vertice<T> v = vertices.get(verticeId);
+			if(v.getColor().equals("blanco")){
+				resultado.addAll(recorridoEnAmplitud(v));
+			}
+		}
+		return resultado;
+	}
 }

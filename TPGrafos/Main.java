@@ -1,11 +1,14 @@
 package TPGrafos;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class Main {
 
 	public static void main(String[] args) {
 
 		// Creo un grafo dirigdo donde las etiquetas de los arcos son valores Float
-		GrafoDirigido<Float> grafito = new GrafoDirigido<>();
+		GrafoDirigido<Float> grafito = new GrafoDirigido<Float>();
 		
 		// Agrego los vertices 1 y 2
 		grafito.agregarVertice(1);
@@ -17,7 +20,7 @@ public class Main {
 		// Obtengo el arco entre 1 y 2, y le pido la etiqueta
 		Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
 		
-		System.out.println(etiqueta); // Deber�a imprimir 3
+		System.out.println("El valor de la etiqueta es: " + etiqueta); // Deber�a imprimir 3
 	}
 
 }
