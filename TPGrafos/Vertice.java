@@ -2,8 +2,6 @@ package TPGrafos;
 
 import java.util.LinkedList;
 
-
-
 public class Vertice<T> {
     
     private int verticeId;
@@ -22,22 +20,36 @@ public class Vertice<T> {
         this.verticeId = verticeId;
     }
 
-    public LinkedList<Arco<T>> getArcos() {     // devuelvo una lista nueva para no romper el encapsulamiento
+    public LinkedList<Arco<T>> getArcos() {    
         return new LinkedList<>(arcos);
     }
 
-    public void addArco(Arco<T> unArco){      // duda, se pasa un arco como parámetro o los vérticas y la etiqueta?
-        arcos.add(unArco);                     //decidí realizar las verficaciones en la clase GrafoDirigido y directamente llamar a este método con el arco que se agrega a la lista
+    public boolean addArco(Arco<T> unArco){
+        if (arcos.contains(unArco)){
+            return false;
+        }
+        arcos.add(unArco);                 
+        return true;
     }
 
-    public void removeArco(Arco<T> unArco){   // duda, se pasa un arco como parámetro o los vérticas y el arco? Se debe implementar el equals en la clase Arco y preguntar si arcos.contains(arco) para eliminarlo?
-        arcos.remove(unArco);                  //decidí realizar las verficaciones en la clase GrafoDirigido y directamente llamar a este método con el arco que se elimina de la lista
+    public LinkedList<Integer> obtenerAdyacentes(){
+		LinkedList<Integer> lista = new LinkedList<Integer>();
+		for(Arco<T> arco : arcos) {
+			lista.add(arco.getVerticeDestino());
+		}
+		return lista;
+	}
+
+    public boolean removeArco(Integer verticeDestino){      
+        for(Arco<T> arco : arcos){
+            if(arco.getVerticeDestino() == verticeDestino){
+                return arcos.remove(arco);
+            }
+        }
+        return false;
     }
 
     public boolean existeArco(int verticeId){
         return false;
     }
-    
-    
-
 }
