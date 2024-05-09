@@ -204,4 +204,33 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}
 		return resultado;
 	}
+
+	public LinkedList<Integer> obtenerRecorridoMasLargo(Integer verticeOrigen, Integer verticeDestino){
+		if(!contieneVertice(verticeOrigen) || !contieneVertice(verticeDestino)){
+			return new LinkedList<Integer>();
+		}
+		return recorridoMasLargo(verticeOrigen, verticeDestino);
+	}
+
+	private LinkedList<Integer> recorridoMasLargo(Integer verticeOrigen, Integer verticeDestino){
+		LinkedList<Integer> res = new LinkedList<Integer>();  
+		LinkedList<Integer> resParcial = new LinkedList<Integer>();
+		if(verticeOrigen.equals(verticeDestino)){
+			res.add(verticeOrigen);
+			return res;
+		}
+		Iterator<Integer> arcos = obtenerAdyacentes(verticeOrigen);
+		while(arcos.hasNext()){
+			Integer verticeAdyacente = arcos.next();
+			resParcial = obtenerRecorridoMasLargo(verticeAdyacente, verticeDestino);
+			if (resParcial.size() > res.size()){
+				res = new LinkedList<Integer>(resParcial);
+			}
+		}
+		if(res.size() > 0){
+			res.add(0, verticeOrigen);
+		}
+		return res;
+	}
+
 }
