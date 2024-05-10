@@ -1,4 +1,4 @@
-package TPGrafos;
+package TP4_Grafos;
 
 public class GrafoNoDirigido<T> extends GrafoDirigido<T> {
 

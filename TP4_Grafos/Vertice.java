@@ -1,4 +1,4 @@
-package TPGrafos;
+package TP4_Grafos;
 
 import java.util.LinkedList;
 
