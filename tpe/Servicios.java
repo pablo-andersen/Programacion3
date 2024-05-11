@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Iterator;
 
 import tpe.utils.CSVReader;
 
@@ -14,7 +14,7 @@ import tpe.utils.CSVReader;
  * de implementación.
  */
 public class Servicios {
-
+	
 	private HashMap<String, Tarea> tareas = new HashMap<String, Tarea>();
 	private HashMap<String, Procesador> procesadores = new HashMap<String, Procesador>();
 	/*
@@ -37,25 +37,34 @@ public class Servicios {
     
     /*
      * Expresar la complejidad temporal del servicio 2.
+	 * Complejidad temporal: O(n) con n = cantidad de tareas porque siempre se iteran TODAS las tareas
      */
 	public List<Tarea> servicio2(boolean esCritica) {
 		LinkedList<Tarea> resultado = new LinkedList<Tarea>();
-		// Iterator<String> itTareas= tareas.keySet().iterator();
-		while (itTareas.hasNext()){
-			Tarea temp = itTareas.next();
-			if(temp.isCritica()){
-
+		Iterator<String> itTareas= tareas.keySet().iterator();
+		while (itTareas.hasNext()){									// O(n) con n = cantidad de tareas
+			String idTareaTemp = itTareas.next();
+			if(tareas.get(idTareaTemp).isCritica() == esCritica){				// O(1) constante, ya que es un get de un HashMap
+				resultado.add(tareas.get(idTareaTemp));
 			}
-
-
 		}
-		return ;	
+		return resultado;
 	}
 
     /*
      * Expresar la complejidad temporal del servicio 3.
+	 * Complejidad temporal: O(n) con n = cantidad de tareas porque siempre se iteran TODAS las tareas
      */
 	public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
-		return new LinkedList<Tarea>();	
+		LinkedList<Tarea> resultado = new LinkedList<Tarea>();
+		Iterator<String> itTareas= tareas.keySet().iterator();
+		while (itTareas.hasNext()){									// O(n) con n = cantidad de tareas
+			String idTareaTemp = itTareas.next();
+			Integer prioridad = tareas.get(idTareaTemp).getPrioridad();				// O(1) constante, ya que es un get de un HashMap
+			if(prioridad > prioridadInferior && prioridad < prioridadSuperior){				
+				resultado.add(tareas.get(idTareaTemp));
+			}
+		}
+		return resultado;	
 	}
 }
