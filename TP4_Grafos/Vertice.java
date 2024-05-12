@@ -50,32 +50,32 @@ public class Vertice<T> {
             this.tiempoFinalizacion = tiempoFinalizacion;
         }
     
-    public LinkedList<Arco<T>> getArcos() {    
-        return new LinkedList<>(arcos);
-    }
+    // public LinkedList<Arco<T>> getArcos() {    
+    //     return new LinkedList<>(arcos);
+    // }
 
-    public boolean addArco(Arco<T> unArco){
-        if (arcos.contains(unArco)){
-            return false;
-        }
-        arcos.add(unArco);                 
-        return true;
-    }
+    // public boolean addArco(Arco<T> unArco){
+    //     if (arcos.contains(unArco)){
+    //         return false;
+    //     }
+    //     arcos.add(unArco);                 
+    //     return true;
+    // }
 
-    public LinkedList<Integer> obtenerAdyacentes(){
-		LinkedList<Integer> lista = new LinkedList<Integer>();
-		for(Arco<T> arco : arcos) {
-			lista.add(arco.getVerticeDestino());
-		}
-		return lista;
-	}
+    // public LinkedList<Integer> obtenerAdyacentes(){
+	// 	LinkedList<Integer> lista = new LinkedList<Integer>();
+	// 	for(Arco<T> arco : arcos) {
+	// 		lista.add(arco.getVerticeDestino());
+	// 	}
+	// 	return lista;
+	// }
 
-    public boolean removeArco(Integer verticeDestino){      
-        for(Arco<T> arco : arcos){
-            if(arco.getVerticeDestino() == verticeDestino){
-                return arcos.remove(arco);
-            }
-        }
-        return false;
-    }
+    // public boolean removeArco(Integer verticeDestino){      
+    //     for(Arco<T> arco : arcos){
+    //         if(arco.getVerticeDestino() == verticeDestino){
+    //             return arcos.remove(arco);
+    //         }
+    //     }
+    //     return false;
+    // }
 }
