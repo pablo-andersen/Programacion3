@@ -3,12 +3,10 @@ package TP4_Grafos;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	
 	HashMap<Integer, LinkedList<Arco<T>>> vertices;
-	Queue<Integer> fila;		
 	int cantidadVertices;																
 	int cantidadArcos;
 	int tiempo;

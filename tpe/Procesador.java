@@ -6,6 +6,7 @@ public class Procesador {
     private boolean refrigerado;
     private Integer anio;
 
+
     public Procesador(String id, String codigo, boolean refrigerado, Integer anio) {
         this.id = id;
         this.codigo = codigo;

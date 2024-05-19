@@ -6,6 +6,7 @@ import java.util.List;
 
 import java.util.Iterator;
 
+import tpe.utils.AsignacionTareasBackTracking;
 import tpe.utils.CSVReader;
 
 /**
@@ -66,5 +67,16 @@ public class Servicios {
 			}
 		}
 		return resultado;	
+	}
+
+	public void servicio4(int tiempoMaxEjecucion){   //Servicio que se encarga de asignar las tareas a los procesadores usando backtracking
+		// Implementar
+		AsignacionTareasBackTracking backTracking = new AsignacionTareasBackTracking(tiempoMaxEjecucion);
+		backTracking.asignarTareas(tareas, procesadores);
+	}
+
+	public void servicio5(int tiempoMaxEjecucion){   //Servicio que se encarga de asignar las tareas a los procesadores usando greedy
+		// Implementar
+		AsignacionTareasGreedy.asignarTareas(tareas, procesadores);
 	}
 }
