@@ -1,27 +1,39 @@
 package tpe.utils;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import tpe.Procesador;
 import tpe.Tarea;
 
 public class AsignacionTareasBackTracking {
+    Integer tiempoX;
+    Estado mejorSolucion;
+    Estado estadoInicial;
+    LinkedList<Tarea> tareasDisponibles;
     
-    private int tiempoMaxEjecucion;
-    private HashMap<String, String> tareasAsignadas;
-    private Hashtable<String, Boolean> ultimaTareaCritica;
-    private Hashtable<String, Integer> tiempoTotalEjecucion;
 
-    public AsignacionTareasBackTracking(int tiempoMaxEjecucion) {
-        this.tiempoMaxEjecucion = tiempoMaxEjecucion;
+    public AsignacionTareasBackTracking(HashMap<String, Procesador> procesadores, HashMap<String, Tarea>tareas, Integer tiempoMaxEjecucion) {
+        this.tareasDisponibles = new LinkedList<Tarea>(tareas.values());
+        this.tiempoX = tiempoMaxEjecucion;
+        this.mejorSolucion = null;
+        this.estadoInicial = new Estado(procesadores);
     }
+    
 
-    public void asignarTareas(HashMap<String, Tarea>tareas, HashMap<String, Procesador> procesadores) {
-        //no puedo asignar al mismo procesador dos tareas con el críticas de manera consecutiva
+    public void asignarTareas() {
+        backtracking(estadoInicial, tareasDisponibles);
+        //no puedo asignar al mismo procesador mas de dos tareas críticas.
         //no puedo asignar a un procesador no refrigerado si el tiempo de ejecución de la tarea es mayor a tiempoMaxEjecucion
     }
 
-    private void method(){
+    private void backtracking(Estado estado, LinkedList<Tarea> tareasDisponibles) {
         // Implementar
+        if(tareasDisponibles.size()== 0){
+            //operar solucion
+        }
+        else{
+            
+        }
     }
 }
